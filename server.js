@@ -11,7 +11,7 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 const rateLimit = require('express-rate-limit');
-const MongoStore = require('connect-mongo');
+const MongoStore = require('connect-mongo').default;
 
 const User = require('./models/User');
 const Group = require('./models/Group');
