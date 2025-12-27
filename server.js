@@ -76,12 +76,13 @@ app.use(session({
   ttl: 24 * 60 * 60
 }),
   cookie: {
-    secure: process.env.NODE_ENV === 'production',
+    secure: true,
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000,
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict' // IMPORTANT: Change for cross-domain
+    sameSite: 'none' // IMPORTANT: Change for cross-domain
   },
-  name: 'sessionId'
+  name: 'sessionId',
+  proxy: true
 }));
 
 // Serve static files
