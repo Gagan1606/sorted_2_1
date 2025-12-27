@@ -18,6 +18,7 @@ const Group = require('./models/Group');
 const Photo = require('./models/Photo');
 
 const app = express();
+app.set('trust proxy', 1);
 const upload = multer({ 
   storage: multer.memoryStorage(),
   limits: { fileSize: 10 * 1024 * 1024 } // 10MB limit
