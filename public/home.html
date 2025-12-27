@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Photo Share</title>
+    <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+    <nav class="navbar">
+        <h1>Photo Share</h1>
+        <div class="nav-actions">
+            <span id="username-display"></span>
+            <button id="logoutBtn" class="btn-secondary">Logout</button>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="actions-panel">
+            <button id="createGroupBtn" class="btn-primary">Create New Group</button>
+            <button id="instantShareBtn" class="btn-primary">Instant Share</button>
+            <button id="viewGroupsBtn" class="btn-secondary">View Groups</button>
+        </div>
+        
+        <!-- Create Group Modal -->
+        <div id="createGroupModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Create New Group</h2>
+                <form id="createGroupForm">
+                    <div class="form-group">
+                        <label for="groupName">Group Name</label>
+                        <input type="text" id="groupName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="groupPhotos">Upload Photos</label>
+                        <input type="file" id="groupPhotos" accept="image/*" multiple required>
+                        <small>Select multiple photos. Duplicates will be removed automatically.</small>
+                    </div>
+                    
+                    <div id="upload-progress"></div>
+                    
+                    <button type="submit" class="btn-primary">Create Group</button>
+                </form>
+                
+                <!-- FIX 2: Show detected users for confirmation -->
+                <div id="detectedUsersSection" style="display:none;">
+                    <h3>Detected People</h3>
+                    <div id="detectedUsersList"></div>
+                    <div class="form-group">
+                        <label>Add More People (Optional)</label>
+                        <input type="text" id="additionalUsername" placeholder="Enter username">
+                        <button type="button" id="addUserBtn" class="btn-secondary">Add</button>
+                    </div>
+                    <button id="confirmGroupBtn" class="btn-primary">Confirm & Create Group</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Instant Share Modal -->
+        <div id="instantShareModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Instant Share</h2>
+                <form id="instantShareForm">
+                    <div class="form-group">
+                        <label for="sharePhoto">Select Photo</label>
+                        <input type="file" id="sharePhoto" accept="image/*" required>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">Share</button>
+                </form>
+                
+                <div id="shareResult"></div>
+            </div>
+        </div>
+        
+        <!-- Groups List -->
+        <div id="groupsList" class="groups-container"></div>
+    </div>
+    
+    <script src="js/home.js"></script>
+</body>
+</html>
