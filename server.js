@@ -11,6 +11,7 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 const rateLimit = require('express-rate-limit');
+const MongoStore = require('connect-mongo');
 
 const User = require('./models/User');
 const Group = require('./models/Group');
@@ -52,17 +53,33 @@ app.use(cors({
 }));
 
 
+// app.use(session({
+//   secret: process.env.SESSION_SECRET,
+//   resave: false,
+//   saveUninitialized: false,
+//   cookie: {
+//     secure: process.env.NODE_ENV === 'production', // HTTPS only in production
+//     httpOnly: true, // Prevent XSS
+//     maxAge: 24 * 60 * 60 * 1000, // 24 hours
+//     sameSite: 'strict' // CSRF protection
+//   },
+//   name: 'sessionId' // Don't use default 'connect.sid'
+// }));
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI,
+    touchAfter: 24 * 3600 // lazy session update
+  }),
   cookie: {
-    secure: process.env.NODE_ENV === 'production', // HTTPS only in production
-    httpOnly: true, // Prevent XSS
-    maxAge: 24 * 60 * 60 * 1000, // 24 hours
-    sameSite: 'strict' // CSRF protection
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000,
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict' // IMPORTANT: Change for cross-domain
   },
-  name: 'sessionId' // Don't use default 'connect.sid'
+  name: 'sessionId'
 }));
 
 // Serve static files
